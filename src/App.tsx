@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { Button } from "./components/ui/button";
 
 export default function App() {
@@ -23,11 +24,8 @@ export default function App() {
           Thoughts-Verse is a minimalist space for honest expression and quiet
           discovery. No likes. No clout. Just pure thoughts.
         </p>
-        <Button
-          variant={"secondary"}
-          className="hover:bg-primary/90 cursor-pointer"
-        >
-          Get Started
+        <Button variant={"link"}>
+          <Link to="/thoughts">Get Started</Link>
         </Button>
       </section>
 
