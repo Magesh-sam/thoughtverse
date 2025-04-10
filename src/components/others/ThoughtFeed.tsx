@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import ThoughtCard from "@/components/others/ThoughtCard";
 import { Textarea } from "../ui/textarea";
 import { Button } from "../ui/button";
@@ -35,6 +35,7 @@ const initialThoughts = [
 
 export default function ThoughtFeed() {
   const [thoughts, setThoughts] = useState(initialThoughts);
+  const textRef = useRef<HTMLTextAreaElement>(null);
 
   return (
     <main className="min-h-screen bg-black/90 text-white grid place-items-center px-4">
@@ -43,8 +44,22 @@ export default function ThoughtFeed() {
           placeholder="What's on your mind?"
           rows={4}
           className="border border-primary/80 w-full"
+          ref={textRef}
         />
-        <Button className="w-full sm:w-auto justify-self-end">Post</Button>
+        <Button
+          onClick={() => {
+            const newThought = {
+              id: Date.now().toString(),
+              content: textRef?.current?.value || "",
+              timestamp: "Just now",
+            };
+            setThoughts([newThought, ...thoughts]);
+            textRef.current!.value = "";
+          }}
+          className="w-full sm:w-auto justify-self-end"
+        >
+          Post
+        </Button>
       </div>
       <div className="w-full max-w-2xl grid gap-6 mt-5">
         {thoughts.map((thought) => (
